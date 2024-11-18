@@ -1,0 +1,12 @@
+<p> 
+        
+        <a href="/status_empresa/{{empresa[0]}}"><button>Reativar</button></a>
+        <a href="/excluir_empresa/{{empresa[0]}}" onclick="return confirm('Deseja realmente EXCLUIR essa empresa?')"><button>Excluir</button></a>
+
+        ID: {{ empresa[0] }} - 
+        NOME: {{ empresa[1] }} -
+        CNPJ: {{ empresa[2] }} - 
+        TEL: {{ empresa[3] }} - 
+        E-MAIL: {{ empresa[4] }}
+
+    </p>

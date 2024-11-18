@@ -1,0 +1,45 @@
+body {
+    min-height: 100vh;
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(164, 255, 181);
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.text-none {
+    text-align: start;
+}
+
+.bnt-voltar {
+    color: white;
+}
+
+.input {
+    width: 15vw;
+    border: 1px solid rgb(177, 177, 177);
+}
+
+#sub {
+    border-top: 2px solid black;
+
+}
+
+.btn-submit {
+    box-shadow: 2px 2px 4px black;
+}

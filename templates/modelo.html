@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/bootstrap/css/Minty.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body  class="d-flex flex-column">
+    <header>
+        {% include 'header.html' %}
+    </header>
+    <main class="container-fluid flex-fill flex-column justify-content-center d-flex align-center text-center">
+        
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+    <footer class="text-center justify-content-center mt-5">
+        {% include 'footer.html' %}
+    </footer>
+
+    <script src="../static/bootstrap/js/bootstrap.js"></script>
+
+</body>
+</html>

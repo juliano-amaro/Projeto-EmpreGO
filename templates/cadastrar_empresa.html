@@ -1,0 +1,40 @@
+{% extends 'modelo.html' %}
+{% block title %} Nova Empresa {% endblock %}
+
+{% block content %}
+<h1>EmpreGO!</h1>
+<h2>Nova Empresa</h2>
+<p>Menu</p>
+
+<a href="/adm"><button type="button" class="btn btn-primary bnt-voltar">Voltar</button></a>
+
+<hr>
+<form action="/cadastrar_empresa" method="post">
+
+    <div class="container text-center flex-column align-items-center d-flex justify-content-center ">
+
+        <label for="nome_empresa" class="form-label">Nome Fantasia da Empresa</label><br>
+        <input type="text" class="input justify-content-center form-control" name="nome_empresa" required><br><br>
+
+        <label for="cnpj" class="form-label">CNPJ</label><br>
+        <input type="text" class="input justify-content-center form-control" name="cnpj" maxlength="14" placeholder="Somente números"><br><br>
+
+        <label for="telefone" class="form-label">Telefone de Contato</label><br>
+        <input type="text" class="input justify-content-center form-control" name="telefone" maxlength="11" placeholder="Somente números"><br><br>
+
+        <div class="container text-center flex-column align-items-center d-flex justify-content-center ">
+        <h2 class="py-5">Informações para acesso da plataforma</h2>
+        <label for="email" class="form-label">E-mail</label><br>
+        <input type="email" class="input justify-content-center form-control" name="email"><br><br>
+
+        <label for="senha" class="form-label">Senha</label><br>
+        <input type="senha" class="input justify-content-center form-control" name="senha"><br><br>
+
+        <button class="btn btn-success btn-submit" type="submit">Cadastrar Empresa</button>
+        {% if msg_erro %} <p style="color: red;">{{msg_erro}}</p> {% endif %}
+
+        </div>
+
+</form>
+
+{% endblock %}
