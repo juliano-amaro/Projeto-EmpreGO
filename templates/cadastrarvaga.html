@@ -15,14 +15,26 @@
                 </div>
             {% endif %}
 
-            <form action="/cadastrar_vaga" method="post">
+            <form action="/cadastrar_vaga" method="post" class="needs-validation" novalidate>
                 <div class="mb-3">
                     <label for="titulo" class="form-label">Título da Vaga</label>
                     <input type="text" class="form-control" id="titulo" name="titulo" required>
+                    <div class="valid-feedback">
+                        Válido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Inválido! Preencha o título da vaga! Ex: Programador Back-End
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição da Vaga</label>
                     <textarea class="form-control" id="descricao" name="descricao" rows="5" required></textarea>
+                    <div class="valid-feedback">
+                        Válido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Inválido! Preencha a descrição da vaga! Ex: Escreva a proposta da vaga
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="formato" class="form-label">Formato de Trabalho</label>
@@ -41,11 +53,23 @@
                 </div>
                 <div class="mb-3">
                     <label for="local" class="form-label">Local da Vaga (se aplicável)</label>
-                    <input type="text" class="form-control" id="local" name="local">
+                    <input type="text" class="form-control" id="local" name="local" required>
+                    <div class="valid-feedback">
+                        Válido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Inválido! Preencha o local da vaga! Ex: São Paulo
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label for="salario" class="form-label">Salário (opcional)</label>
-                    <input type="text" class="form-control" id="salario" name="salario">
+                    <label for="salario" class="form-label">Salário</label>
+                    <input type="text" class="form-control" id="salario" name="salario" required>
+                    <div class="valid-feedback">
+                        Válido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Inválido! Preencha o salário da vaga! Ex: 10000
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">Cadastrar Vaga</button>
@@ -54,5 +78,26 @@
         </div>
     </div>
 </div>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
 
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+    
+</script>
 {% endblock %}

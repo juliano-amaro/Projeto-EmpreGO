@@ -15,14 +15,26 @@
                 </div>
             {% endif %}
 
-            <form action="/login" method="post">
+            <form action="/login" method="post" class="needs-validation" novalidate>
                 <div class="mb-3 form-floating">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Insira seu e-mail" required>
                     <label for="email" class="form-label">E-mail</label>
+                    <div class="valid-feedback">
+                        Válido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Inválido! Preencha campo e-mail! Ex: exemplo@email.com
+                    </div>
                 </div>
                 <div class="mb-3 form-floating">
                     <input type="password" class="form-control" id="senha" name="senha" placeholder="Insira sua senha" required>
                     <label for="senha" class="form-label">Senha</label>
+                    <div class="valid-feedback">
+                        Válido!
+                    </div>
+                    <div class="invalid-feedback">
+                        Inválido! Preencha o campo senha! Ex: Utilize caracteres especiais como @#$%!
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Acessar</button> <p></p>
                 <p class="text-center"> <a href="/">Voltar</a> </p>
@@ -30,5 +42,27 @@
         </div>
     </div>
 </div>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
 
+(() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+    }, false)
+    })
+})()
+        
+</script>
 {% endblock %}
