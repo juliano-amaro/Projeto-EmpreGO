@@ -9,26 +9,53 @@
 <a href="/adm"><button type="button" class="btn btn-primary bnt-voltar">Voltar</button></a>
 
 <hr>
-<form action="/cadastrar_empresa" method="post">
+<form action="/cadastrar_empresa" method="post" class="needs-validation" novalidate>
 
     <div class="container text-center flex-column align-items-center d-flex justify-content-center ">
 
-        <label for="nome_empresa" class="form-label">Nome Fantasia da Empresa</label><br>
-        <input type="text" class="input justify-content-center form-control" name="nome_empresa" required><br><br>
+        <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
+            <label for="nome_empresa" class="form-label">Nome Fantasia da Empresa</label><br>
+            <input type="text" class="input justify-content-center form-control" name="nome_empresa" required><br><br>
+            <div class="valid-feedback">
+                Válido!
+            </div>
+            <div class="invalid-feedback">
+                Inválido! Preencha o nome da empresa! Ex: Empresa de TI
+            </div>
+        </div>
 
-        <label for="cnpj" class="form-label">CNPJ</label><br>
-        <input type="text" class="input justify-content-center form-control" name="cnpj" maxlength="14" placeholder="Somente números"><br><br>
+        <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
+            <label for="cnpj" class="form-label">CNPJ</label><br>
+            <input type="text" id="cnpj" class="input justify-content-center form-control" name="cnpj" " required><br><br>
+            <div class="valid-feedback">
+                Válido!
+            </div>
+            <div class="invalid-feedback">
+                Inválido! Preencha o CNPJ da empresa! Ex: 99.999.999/9999-99
+            </div>
+        </div>
+            
+        </div>
 
-        <label for="telefone" class="form-label">Telefone de Contato</label><br>
-        <input type="text" class="input justify-content-center form-control" name="telefone" maxlength="11" placeholder="Somente números"><br><br>
+        <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
+            <label for="telefone" class="form-label">Telefone de Contato</label><br>
+            <input type="text" id="telefone" class="input form-control" name="telefone" required ><br><br>
+            <div class="valid-feedback">
+                Válido!
+            </div>
+            <div class="invalid-feedback">
+                Inválido! Preencha o número de contato da empresa! Ex: (99)99999-9999
+            </div>
+        </div>
 
         <div class="container text-center flex-column align-items-center d-flex justify-content-center ">
         <h2 class="py-5">Informações para acesso da plataforma</h2>
+
         <label for="email" class="form-label">E-mail</label><br>
-        <input type="email" class="input justify-content-center form-control" name="email"><br><br>
+        <input type="email" class="input justify-content-center form-control" name="email" required><br><br>
 
         <label for="senha" class="form-label">Senha</label><br>
-        <input type="senha" class="input justify-content-center form-control" name="senha"><br><br>
+        <input type="senha" class="input form-control justify-content-center form-control" name="senha" required><br><br>
 
         <button class="btn btn-success btn-submit" type="submit">Cadastrar Empresa</button>
         {% if msg_erro %} <p style="color: red;">{{msg_erro}}</p> {% endif %}
@@ -36,5 +63,36 @@
         </div>
 
 </form>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+        }, false)
+    })
+    })()
+ </script>
+
+ <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+
+ <script>
+
+    Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"))
+    Inputmask("(99)99999-9999").mask(document.getElementById("telefone"))
+
+ </script>
 
 {% endblock %}

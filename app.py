@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, redirect, session
 from mysql.connector import Error
 from config import *
 from db_functions import *
+import os
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
+app.config['UPLOAD_FOLDER'] = 'uploads/'
 
 #ROTA INICIAL
 @app.route('/')
@@ -141,8 +143,8 @@ def cadastrar_empresa():
     #Tratando os dados vindos do formulario
     if request.method == 'POST':
         nome_empresa = request.form['nome_empresa']
-        cnpj = request.form['cnpj']
-        telefone = request.form['telefone']
+        cnpj = limpar_input(request.form['cnpj'])
+        telefone = limpar_input(request.form['telefone'])
         email = request.form['email']
         senha = request.form['senha']
 
@@ -197,8 +199,8 @@ def editar_empresa(id_empresa):
      #Tratando os dados vindos do formulario
     if request.method == 'POST':
         nome_empresa = request.form['nome_empresa']
-        cnpj = request.form['cnpj']
-        telefone = request.form['telefone']
+        cnpj = limpar_input(request.form['cnpj'])
+        telefone = limpar_input(request.form['telefone'])
         email = request.form['email']
         senha = request.form['senha']
 
@@ -356,7 +358,7 @@ def editarvaga(id_vaga):
         formato = request.form['formato']
         tipo = request.form['tipo']
         local = request.form['local']
-        salario = request.form['salario']
+        salario = limpar_input(request.form['salario'])
 
         if not titulo or not descricao or not formato or not tipo:
             return redirect('/empresa')
@@ -452,7 +454,7 @@ def cadadastrarvaga():
         local = ''
         local = request.form['local']
         salario = ''
-        salario = request.form['salario']
+        salario = limpar_input(request.form['salario'])
         id_empresa = session['id_empresa']
 
         if not titulo or not descricao or not formato or not tipo:
@@ -498,6 +500,42 @@ def sobre_vaga(id_vaga):
     finally:
         encerrar_db(cursor, conexao)
 
+
+@app.route("/candidato/<int:id_vaga>", methods=['POST', 'GET'])
+def candidato(id_vaga):
+    
+    if 'adm' in session:
+        return redirect('/')
+
+    if request.method == 'GET':
+        return render_template('candidato.html', id_vaga=id_vaga)
+
+    if request.method == 'POST':
+        nome_candidato = request.form["nome_candidato"]
+        email = request.form["email"]
+        telefone = request.form["telefone"]
+        file = request.files["file"]
+
+        if file.filename == '':
+            msg = f"Nenhum arquivo foi encontrado!!"
+            return redirect('/candidato', msg=msg)
+        
+        try:
+            conexao, cursor = conectar_db()
+            nome_arquivo = f'{id_vaga}_{file.filename}'
+            comandoSQL = 'INSERT INTO candidato (nome, email, telefone, curriculo, id_vaga) VALUES (%s, %s, %s, %s, %s)'
+            cursor.execute(comandoSQL, (nome_candidato, email, telefone, nome_arquivo, id_vaga))
+            conexao.commit()
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], nome_arquivo))
+
+            return redirect('/')
+        
+        except Error as erro:
+            return f"ERRO! Erro de Banco de Dados: {erro}"
+        except Exception as erro:
+            return f"ERRO! Outros erros: {erro}"
+        finally:
+            encerrar_db(cursor, conexao)
 
 #FINAL DO CÓDIGO
 if __name__ == '__main__':

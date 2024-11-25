@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../static/bootstrap/css/Minty.css">
     <link rel="stylesheet" href="../static/css/style.css">
     <title>{% block title %} {% endblock %}</title>
@@ -11,7 +12,7 @@
     <header>
         {% include 'header.html' %}
     </header>
-    <main class="container-fluid flex-fill flex-column justify-content-center d-flex align-center text-center">
+    <main class=" flex-fill flex-column justify-content-center d-flex align-center text-center">
         
         {% block content %}
 
@@ -23,6 +24,8 @@
     </footer>
 
     <script src="../static/bootstrap/js/bootstrap.js"></script>
+
+    
 
 </body>
 </html>

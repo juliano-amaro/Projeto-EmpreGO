@@ -100,4 +100,11 @@
 })()
     
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+
+<script>
+    Inputmask("numeric", {radixPoint: ",", groupSeparator: ".", digits: 2, autoGroup: true, rightAlign: false, allowMinus: false, prefix: "R$" }).mask(document.getElementById("salario"))
+
+</script>
 {% endblock %}
