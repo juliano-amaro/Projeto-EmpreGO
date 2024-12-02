@@ -2,6 +2,10 @@
     <div class="container">
       <a class="navbar-brand" href="/"><img src="../static/img/logo_emprego.png" width="125px"></a>
       <span class="fs-6 text-dark"> Beta </span>
+      <form action="/procurar" method="POST" class="d-flex ms-3" role="search">
+        <input class="form-control me-2" type="search" name="procurar" placeholder="Procurar vaga" aria-label="Search">
+        <button class="btn btn-outline-dark bg-info" type="submit">Procurar</button>
+      </form>
       <button
         class="navbar-toggler"
         type="button"

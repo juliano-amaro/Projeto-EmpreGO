@@ -1,0 +1,19 @@
+{% extends 'modelo.html' %}
+{% block title %} Visualizar Currículo {% endblock %}
+
+{% block content %}
+
+{% for curriculo in curriculos %}
+
+    <p>Nº: {{ curriculo.id_candidato }} - Nome: {{ curriculo.nome }} - E-mail: {{curriculo.email}} - Telefone: {{curriculo.telefone}} 
+
+        <a href="/download/{{curriculo.curriculo}}" class="download" target="_blank">Visualizar</a>
+        <a href="/delete/{{curriculo.curriculo}}" class="excluir">Excluir</a>
+        
+    </p>
+    
+{% else %}
+<p>Não há currículos para essa vaga!</p>
+{% endfor %}
+
+{% endblock %}

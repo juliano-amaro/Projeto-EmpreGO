@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, send_from_directory
 from mysql.connector import Error
 from config import *
 from db_functions import *
@@ -504,6 +504,9 @@ def sobre_vaga(id_vaga):
 @app.route("/candidato/<int:id_vaga>", methods=['POST', 'GET'])
 def candidato(id_vaga):
     
+    if not session:
+        return redirect('/login')
+
     if 'adm' in session:
         return redirect('/')
 
@@ -513,7 +516,7 @@ def candidato(id_vaga):
     if request.method == 'POST':
         nome_candidato = request.form["nome_candidato"]
         email = request.form["email"]
-        telefone = request.form["telefone"]
+        telefone = limpar_input(request.form["telefone"])
         file = request.files["file"]
 
         if file.filename == '':
@@ -536,6 +539,80 @@ def candidato(id_vaga):
             return f"ERRO! Outros erros: {erro}"
         finally:
             encerrar_db(cursor, conexao)
+
+@app.route("/curriculos/<int:id_vaga>")
+def curriculo_candidato(id_vaga):
+
+    if not session:
+        return redirect('/login')
+    
+    if 'adm' in session:
+        return redirect('/adm')
+    
+ 
+
+    if request.method == 'GET':
+        try:
+            conexao, cursor = conectar_db()
+            comandoSQL = '''
+                SELECT c.*, v.id_empresa 
+                FROM vaga v
+                JOIN candidato c ON c.id_vaga = v.id_vaga
+                WHERE c.id_vaga = %s
+            '''
+            cursor.execute(comandoSQL, (id_vaga,))
+            curriculos = cursor.fetchall()
+
+            if not curriculos:
+                return redirect('/empresa')
+            if session['id_empresa'] != curriculos[0]['id_empresa']:
+                return redirect('/empresa')
+
+            return render_template('curriculo_candidato.html', curriculos=curriculos)
+        
+        except Error as erro:
+            return f"ERRO! Erro de Banco de Dados: {erro}"
+        except Exception as erro:
+            return f"ERRO! Outros erros: {erro}"
+        finally:
+            encerrar_db(cursor, conexao)
+        
+@app.route('/download/<filename>')
+def download(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=False)
+
+@app.route('/delete/<filename>')
+def delete_file(filename):
+    try:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        os.remove(file_path)  # Exclui o arquivo
+
+        conexao, cursor = conectar_db()
+        comandoSQL = "DELETE FROM candidato WHERE curriculo = %s"
+        cursor.execute(comandoSQL, (filename,))
+        conexao.commit()
+
+        return redirect('/empresa')
+    except mysql.connector.Error as erro:
+        return f"Erro de banco de Dados: {erro}"
+    except Exception as erro:
+        return f"Erro de back-end: {erro}"
+    finally:
+        encerrar_db(conexao, cursor)
+
+@app.route('/procurar', methods=['POST'])
+def procurar():
+
+    if request.method == 'POST':
+        buscar = request.form['procurar']
+
+        conexao, cursor = conectar_db()
+        comandoSQL = 'SELECT * FROM vagas WHERE nome LIKE %s'
+        cursor.execute(comandoSQL, (f'%{buscar}%',))
+        resultados = cursor.fetchall()
+        
+        return render_template('resultado.html', resultados=resultados, buscar=buscar)
+
 
 #FINAL DO CÓDIGO
 if __name__ == '__main__':

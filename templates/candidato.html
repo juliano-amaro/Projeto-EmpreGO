@@ -3,11 +3,11 @@
 
 {% block content %}
 
-<h2 class="mb-3">Candidatar-se</h2>
+<h2 class="mb-3 py-4">Candidatar-se</h2>
 
 <form action="/candidato/{{id_vaga}}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
 
-    <div class="align-items-center d-flex justify-content-center flex-column text-center">
+    <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
         <label for="nome_candidato" class="form-label">Nome candidato</label>
         <input type="text" class="input justify-content-center form-control" name="nome_candidato" required>
         <div class="valid-feedback">
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="align-items-center d-flex justify-content-center flex-column text-center">
+    <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
         <label for="email" class="form-label">E-mail</label>
         <input type="text" class="input justify-content-center form-control" name="email" required>
         <div class="valid-feedback">
@@ -29,9 +29,9 @@
         </div>
     </div>
 
-    <div class="align-items-center d-flex justify-content-center flex-column text-center">
+    <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
         <label for="telefone" class="form-label">Telefone</label>
-        <input type="text" class="input justify-content-center form-control" name="telefone" required>
+        <input type="text" class="input justify-content-center form-control" name="telefone" id="telefone" required>
         <div class="valid-feedback">
             Válido!
         </div>
@@ -39,7 +39,7 @@
             Inválido! Preencha o campo com o seu nome! Ex: (99)99999-9999
         </div>
     </div>
-    <div class="align-items-center d-flex justify-content-center flex-column text-center">
+    <div class="mb-3 align-items-center d-flex justify-content-center flex-column text-center">
         <label for="file" class="form-label">Currículo</label>
         <input type="file" class="input justify-content-center form-control" name="file" accept="application/pdf" required>
         <div class="valid-feedback">
@@ -55,5 +55,33 @@
 
 </form>
 
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+      'use strict'
+    
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+    
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+    
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+        
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
+
+    <script>
+        Inputmask("(99)99999-9999").mask(document.getElementById("telefone"))
+    </script>
 
 {% endblock %}

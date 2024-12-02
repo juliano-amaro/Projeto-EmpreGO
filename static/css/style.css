@@ -41,7 +41,7 @@ a:hover {
 }
 
 .input {
-    width: 15rem;
+    width: 25rem;
     border: 1px solid rgb(177, 177, 177);
 }
 
@@ -62,3 +62,26 @@ a:hover {
 .banner {
     width: 100%;
 }
+
+.download, .excluir {
+    padding: 5px 20px;
+    background-color: #5562d3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+}
+.excluir {
+    background-color: #db3535;
+    color: #fff;
+}
+
+.excluir:hover {
+    color: white;
+    background-color: #e85959;
+}
+
+.download:hover {
+    background-color: #848ddb;
+    color: white;
+}
+
