@@ -3,6 +3,7 @@ from mysql.connector import Error
 from config import *
 from db_functions import *
 import os
+import time
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
@@ -503,11 +504,8 @@ def sobre_vaga(id_vaga):
 
 @app.route("/candidato/<int:id_vaga>", methods=['POST', 'GET'])
 def candidato(id_vaga):
-    
-    if not session:
-        return redirect('/login')
 
-    if 'adm' in session:
+    if session:
         return redirect('/')
 
     if request.method == 'GET':
@@ -524,8 +522,10 @@ def candidato(id_vaga):
             return redirect('/candidato', msg=msg)
         
         try:
+
+            timestamp = int(time.time())
             conexao, cursor = conectar_db()
-            nome_arquivo = f'{id_vaga}_{file.filename}'
+            nome_arquivo = f'{timestamp}_{id_vaga}_{file.filename}'
             comandoSQL = 'INSERT INTO candidato (nome, email, telefone, curriculo, id_vaga) VALUES (%s, %s, %s, %s, %s)'
             cursor.execute(comandoSQL, (nome_candidato, email, telefone, nome_arquivo, id_vaga))
             conexao.commit()
@@ -549,8 +549,6 @@ def curriculo_candidato(id_vaga):
     if 'adm' in session:
         return redirect('/adm')
     
- 
-
     if request.method == 'GET':
         try:
             conexao, cursor = conectar_db()
@@ -602,17 +600,22 @@ def delete_file(filename):
 
 @app.route('/procurar', methods=['POST'])
 def procurar():
+    try:
+        if request.method == 'POST':
+            buscar = request.form['procurar']
 
-    if request.method == 'POST':
-        buscar = request.form['procurar']
-
-        conexao, cursor = conectar_db()
-        comandoSQL = 'SELECT * FROM vagas WHERE nome LIKE %s'
-        cursor.execute(comandoSQL, (f'%{buscar}%',))
-        resultados = cursor.fetchall()
-        
-        return render_template('resultado.html', resultados=resultados, buscar=buscar)
-
+            conexao, cursor = conectar_db()
+            comandoSQL = 'SELECT * FROM vaga WHERE titulo LIKE %s AND status = "ativa" ORDER BY id_vaga DESC'
+            cursor.execute(comandoSQL, (f'%{buscar}%',))
+            resultados = cursor.fetchall()
+            
+            return render_template('resultado.html', resultados=resultados, buscar=buscar)
+    except mysql.connector.Error as erro:
+        return f"Erro de banco de Dados: {erro}"
+    except Exception as erro:
+        return f"Erro de back-end: {erro}"
+    finally:
+        encerrar_db(conexao, cursor)
 
 #FINAL DO CÓDIGO
 if __name__ == '__main__':

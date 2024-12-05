@@ -2,18 +2,33 @@
 {% block title %} Visualizar Currículo {% endblock %}
 
 {% block content %}
+<div class="container">
 
-{% for curriculo in curriculos %}
+    <h2 class="my-5">Candidatos para a Vaga</h2>
 
-    <p>Nº: {{ curriculo.id_candidato }} - Nome: {{ curriculo.nome }} - E-mail: {{curriculo.email}} - Telefone: {{curriculo.telefone}} 
+    {% for curriculo in curriculos %}
 
-        <a href="/download/{{curriculo.curriculo}}" class="download" target="_blank">Visualizar</a>
-        <a href="/delete/{{curriculo.curriculo}}" class="excluir">Excluir</a>
-        
-    </p>
-    
-{% else %}
-<p>Não há currículos para essa vaga!</p>
-{% endfor %}
+    <div class="card mb-4 shadow">
+        <div class="card-body">
+            <h5 class="card-title text-primary">
+                {{ curriculo.nome }}
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+                {{ curriculo.email }}
+            </h6>
+            <p class="card-text">
+                {{ curriculo.telefone }}
+            </p>
+            <a href="/download/{{curriculo.curriculo}}" class="btn btn-info" target="_blank">Visualizar</a>
+            <a href="/delete/{{curriculo.curriculo}}" class="btn btn-danger">Excluir</a>
+        </div>
+    </div>
+
+
+    {% else %}
+    <p>Não há currículos para essa vaga!</p>
+    {% endfor %}
+
+</div>
 
 {% endblock %}

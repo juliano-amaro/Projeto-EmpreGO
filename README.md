@@ -16,18 +16,24 @@ A EmpreGO! tem como objetivo atender uma necessidade atual da sociedade, que env
 
 🚧 Projeto em desenvolvimento 🚧
 ## Funcionalidades
- - Nosso site está previsto com no minimo três tipos de Usuário(adm,empresa,visitante)
- - No site da EmpreGO! os usuarios podem se candidatar a vagas(Ainda apenas um prototipo.);
- - Os usuarios empresa pode fazer login no site (Isso é apenas um prototipo.);
+ - Nosso site está previsto com no minimo três tipos de Usuário(adm, empresa, visitante)
+ - No site da EmpreGO! os usuarios podem se candidatar a vagas;
+ - Os usuarios empresa pode fazer login no site;
  - Os usuarios empresa pode cadastrar vagas;
  - Os usuarios empresa podem ativar/inativar vagas
  - Os usuarios empresa podem deletar vagas;
  - Os usuarios visitante tem acesso a vagas;
  - Os usuarios adm criam as empresas;
  - Os usuarios adm inativam/ativam as empresas;(Quando a empresa é desativada as vagas são destivadas também)
- - Os usuarios asm deletam as empresas;
- - Os usuarios ter mais informações clicando na vaga desejada;
- - Nossos usuarios podem pesquisar por vagas desejados.
+ - Os usuarios adm deletam as empresas;
+ - Os usuarios padrão podem ter mais informações clicando na vaga desejada;
+ - Nossos usuarios podem pesquisar por vagas desejados;
+ - Os usuários podem pesquisar vagas que procuram.
+## Instalação
+**Como instalar o projeto:**
+
+
+
 ## Tecnologias Utilizadas
 **Linguagem/Frameworks:**
 
